@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { VoiceMemoWidget } from "@/widgets/voiceMemo/ui/VoiceMemoWidget";
+import { VoiceMemoWidget } from "./widgets/voiceMemo/ui/VoiceMemoWidget";
 
 export default function Home() {
   return (
