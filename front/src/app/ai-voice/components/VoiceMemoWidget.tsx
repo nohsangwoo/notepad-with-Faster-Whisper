@@ -1,10 +1,10 @@
 "use client";
 
 import React, { FC, useState, useCallback } from "react";
-import { useAudioRecording } from "@/features/audioRecording/model/useAudioRecording";
-import { useRealTimeRecognition } from "@/features/speechRecognition/model/useRealTimeRecognition";
-import { MemoList } from "@/entities/memo/ui/MemoList";
-import { CurrentTranscription } from "@/entities/memo/ui/CurrentTranscription";
+import { useAudioRecording } from "../hooks/useAudioRecording";
+import { useRealTimeRecognition } from "../hooks/useRealTimeRecognition";
+import { MemoList } from "./MemoList";
+import { CurrentTranscription } from "./CurrentTranscription";
 
 export const VoiceMemoWidget: FC = () => {
   const [memo, setMemo] = useState<string[]>([]);

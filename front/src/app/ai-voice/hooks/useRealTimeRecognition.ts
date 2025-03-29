@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useRef, useCallback, useEffect } from "react";
-import { VoiceActivityDetectionConfig } from "@/shared/types/audio";
-import { concatenateAudioBuffers, createWavFromAudioBuffer } from "@/shared/lib/audio/audioUtils";
-import { WEBSOCKET_URL } from "@/shared/api/transcription";
+import { VoiceActivityDetectionConfig } from "../types";
+import { concatenateAudioBuffers, createWavFromAudioBuffer } from "../utils/audioUtils";
+import { WEBSOCKET_URL } from "../api";
 
 export function useRealTimeRecognition() {
   const [isRealTimeRecording, setIsRealTimeRecording] = useState<boolean>(false);

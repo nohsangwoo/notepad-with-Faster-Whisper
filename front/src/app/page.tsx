@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { VoiceMemoWidget } from "./widgets/voiceMemo/ui/VoiceMemoWidget";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -16,8 +16,22 @@ export default function Home() {
           priority
         />
         
-        {/* 음성 메모 위젯 */}
-        <VoiceMemoWidget />
+        <div className="w-full p-6 bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold mb-4">AI 기능</h2>
+          <div className="flex flex-col gap-4">
+            <Link 
+              href="/ai-voice" 
+              className="group p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            >
+              <h3 className="text-xl font-semibold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                AI 음성 메모 →
+              </h3>
+              <p className="mt-2 text-gray-600 dark:text-gray-300">
+                음성을 텍스트로 변환하고 저장하는 AI 기반 음성 메모 기능입니다.
+              </p>
+            </Link>
+          </div>
+        </div>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
         <a

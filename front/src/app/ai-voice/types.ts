@@ -1,3 +1,10 @@
+// 메모 타입 정의
+export interface Memo {
+  id: string;
+  text: string;
+  createdAt: Date;
+}
+
 // VAD(Voice Activity Detection) 설정 타입
 export interface VoiceActivityDetectionConfig {
   triggered: boolean;

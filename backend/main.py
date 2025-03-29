@@ -30,14 +30,46 @@ def read_root():
 
 @app.post("/transcribe/")
 async def transcribe_audio(file: UploadFile = File(...)):
-    audio_path = f"temp_{file.filename}"
-    # 파일 저장
-    with open(audio_path, "wb") as buffer:
+    # 원본 파일 저장
+    input_path = f"temp_input_{file.filename}"
+    with open(input_path, "wb") as buffer:
         buffer.write(await file.read())
-    # Faster-Whisper로 변환
-    segments, _ = model.transcribe(audio_path)
-    text = " ".join(segment.text for segment in segments)
-    return {"transcription": text}
+    
+    # 처리할 WAV 파일 경로
+    audio_path = f"temp_processed_{file.filename}.wav"
+    
+    try:
+        # FFmpeg를 사용하여 강제로 WAV 형식으로 변환 (16kHz, 16bit, 모노)
+        subprocess.run([
+            "ffmpeg", "-y", "-i", input_path, 
+            "-acodec", "pcm_s16le", "-ac", "1", "-ar", "16000",
+            audio_path
+        ], check=True, capture_output=True)
+        
+        # Faster-Whisper로 변환
+        segments, _ = model.transcribe(audio_path)
+        text = " ".join(segment.text for segment in segments)
+        
+        # 임시 파일 삭제
+        if os.path.exists(input_path):
+            os.remove(input_path)
+        if os.path.exists(audio_path):
+            os.remove(audio_path)
+            
+        return {"transcription": text}
+    
+    except Exception as e:
+        # 오류 발생 시 임시 파일 정리 시도
+        for path in [input_path, audio_path]:
+            if os.path.exists(path):
+                try:
+                    os.remove(path)
+                except:
+                    pass
+        
+        # 오류 정보 반환
+        print(f"오디오 처리 중 오류 발생: {str(e)}")
+        return {"error": str(e)}, 500
 
 @app.websocket("/ws/transcribe/")
 async def websocket_endpoint(websocket: WebSocket):

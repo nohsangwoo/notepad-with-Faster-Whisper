@@ -1,7 +1,7 @@
 "use client";
 
-import { sendAudioToServer } from "@/app/shared/api/transcription";
 import { useState, useRef, useCallback } from "react";
+import { sendAudioToServer } from "../api";
 
 export function useAudioRecording() {
   const [isRecording, setIsRecording] = useState<boolean>(false);
